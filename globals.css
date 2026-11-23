@@ -1,0 +1,172 @@
+@import "../styles/tokens.css";
+
+@property --mx { syntax: "<length-percentage>"; inherits: true; initial-value: 50%; }
+@property --my { syntax: "<length-percentage>"; inherits: true; initial-value: -30%; }
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100dvh;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1, h2, h3, h4, p {
+  margin: 0;
+}
+
+h1, h2, h3 {
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  font-weight: 600;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: 0;
+  background: none;
+  padding: 0;
+}
+
+/* Les champs < 16px provoquent un zoom sur iOS */
+input,
+select,
+textarea {
+  font-size: max(16px, 1em);
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: var(--r-xs);
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+.arabic {
+  font-family: var(--font-arabic);
+  color: var(--arabic);
+  direction: rtl;
+  line-height: 1.9;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--card-3) transparent;
+}
+
+@media (hover: none) {
+  button,
+  a {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Entrée de page */
+.page-enter {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  animation: page-enter var(--d-slow) var(--e-out) backwards;
+}
+@media (min-width: 1101px) and (min-height: 600px) {
+  .page-enter { flex: 1; }
+}
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Mobile : 16 px minimum dans les champs, sinon iOS zoome la page au toucher */
+@media (pointer: coarse) {
+  input, select, textarea { font-size: max(16px, 1em) !important; }
+}
+
+/* Téléphone : réponse immédiate au toucher, pas de sélection sur les commandes */
+button, a, [role="button"], [role="switch"], label, select, summary { touch-action: manipulation; }
+button, [role="button"], [role="switch"], [role="tab"] { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+
+/* ===== Téléphone : chaque page remplit exactement l'écran (pas de défilement, pas de trou) =====
+   Le dernier bloc de la page s'étire ; les listes défilent à l'intérieur de leur bloc. */
+@media (max-width: 960px) {
+  .page-enter { flex: 1 1 0; min-height: 0; }
+  .page-enter > :where(:not(header, section)):last-child { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; align-items: stretch; gap: var(--gutter); }
+  .page-enter > :where(:not(header, section)):last-child > :last-child { flex: 1 1 auto; }
+  .page-enter > section:last-child { flex: 1 1 0; min-height: 0; }
+  /* Onglets : la chaîne jusqu'au bloc affiché s'étire, les conteneurs sans bloc affiché disparaissent */
+  .page-enter div:has([data-panel][data-on]) { display: flex; flex-direction: column; flex: 1 1 0; min-height: 0; align-items: stretch; gap: var(--gutter); }
+  /* seulement les conteneurs qui ne contiennent QUE des blocs masqués (le haut de page reste visible) */
+  .page-enter div:has(> [data-panel]):not(:has(> :not([data-panel]:not([data-on])))) { display: none; }
+  .page-enter [data-panel][data-on] { display: flex; flex-direction: column; flex: 1 1 0; min-height: 0; align-items: stretch; gap: var(--gutter); }
+  .page-enter [data-panel][data-on] > * { flex: 1 1 auto; }
+  /* Un bloc à liste ne s'écrase jamais complètement */
+  .page-enter [data-panel][data-on] > section:has(> [class*="scroll"]) { min-height: 150px; }
+  .page-enter [data-panel][data-on] > section { display: flex; flex-direction: column; }
+}

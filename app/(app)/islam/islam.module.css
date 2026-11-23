@@ -1,0 +1,138 @@
+/* Styles partagés de l'espace Islam */
+.grid2 {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+  gap: var(--gutter);
+  align-items: start;
+}
+.col { display: grid; gap: var(--gutter); min-width: 0; }
+
+/* ----- Héros prochaine prière ----- */
+.hero { padding: var(--s-7); display: grid; gap: var(--s-5); }
+.heroOrb { width: 260px; right: -80px; top: -90px; }
+.heroRow { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--s-5); flex-wrap: wrap; }
+.nextName { font-size: clamp(2.5rem, 1.8rem + 2vw, 3.5rem); font-weight: 600; letter-spacing: -0.04em; line-height: 1; margin-top: var(--s-2); }
+.nextArabic { font-family: var(--font-arabic); font-size: 1.5rem; color: var(--hero-muted); margin-left: var(--s-3); font-weight: 400; }
+.nextMeta { color: var(--hero-muted); font-size: var(--text-sm); margin-top: var(--s-2); }
+.place { display: flex; align-items: center; gap: 8px; color: var(--hero-muted); font-size: var(--text-xs); }
+.place a { color: var(--hero-fg); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--hero-subtle); }
+.streak { text-align: right; }
+.streakNum { font-size: var(--text-2xl); font-weight: 600; letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums; }
+.streakText { font-size: var(--text-xs); color: var(--hero-muted); max-width: 22ch; margin-top: 4px; }
+
+/* ----- Liste des prières ----- */
+.list { display: grid; }
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--s-4);
+  padding: var(--s-3) 0;
+  border-top: 1px solid var(--line);
+}
+.row:first-child { border-top: 0; padding-top: 0; }
+.row:last-child { padding-bottom: 0; }
+.rowName { display: flex; align-items: baseline; gap: var(--s-3); min-width: 0; }
+.rowLabel { font-weight: 600; }
+.rowArabic { font-family: var(--font-arabic); color: var(--fg-muted); font-size: 1.05rem; }
+.rowTime { color: var(--fg-muted); font-variant-numeric: tabular-nums; font-size: var(--text-sm); }
+.rowDim { opacity: 0.55; }
+.rowCurrent .rowLabel::after { content: ""; display: inline-block; width: 6px; height: 6px; margin-left: 8px; border-radius: 50%; background: var(--fg); vertical-align: middle; }
+.upcoming { font-size: var(--text-xs); color: var(--fg-subtle); }
+
+.chips { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+
+/* ----- Semaine ----- */
+.week { display: grid; grid-template-columns: 64px repeat(7, minmax(0, 1fr)); gap: 8px 4px; align-items: center; }
+.weekHead { font-size: 11px; color: var(--fg-subtle); text-align: center; text-transform: capitalize; }
+.weekToday { color: var(--fg); font-weight: 600; }
+.weekLabel { font-size: var(--text-xs); color: var(--fg-muted); }
+.dot { justify-self: center; width: 14px; height: 14px; border-radius: 50%; background: var(--card-3); }
+.dot[data-s="on_time"] { background: var(--fg); }
+.dot[data-s="late"] { background: transparent; box-shadow: inset 0 0 0 4px var(--fg); }
+.dot[data-s="qada"] { background: transparent; box-shadow: inset 0 0 0 1.5px var(--fg-muted); }
+.legend { display: flex; flex-wrap: wrap; gap: var(--s-4); margin-top: var(--s-4); font-size: var(--text-xs); color: var(--fg-muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend .dot { width: 10px; height: 10px; }
+.legend .dot[data-s="late"] { box-shadow: inset 0 0 0 3px var(--fg); }
+
+/* ----- Divers ----- */
+.muted { color: var(--fg-muted); font-size: var(--text-sm); }
+.subtle { color: var(--fg-subtle); font-size: var(--text-xs); }
+.big { font-size: var(--text-2xl); font-weight: 600; letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums; }
+.stack { display: grid; gap: var(--s-4); }
+.inline { display: flex; align-items: center; gap: var(--s-2); flex-wrap: wrap; }
+.between { display: flex; align-items: center; justify-content: space-between; gap: var(--s-3); flex-wrap: wrap; }
+
+@media (max-width: 1100px) {
+  .grid2 { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 640px) {
+  .hero { padding: var(--s-5); gap: var(--s-4); }
+  .heroOrb { width: 190px; right: -70px; top: -70px; }
+  /* Prière à venir : une seule ligne ; prière passée : le choix du statut dessous */
+  .row { padding: 10px 0; }
+  .row:has([role="group"]) { grid-template-columns: minmax(0, 1fr); gap: var(--s-2); }
+  .row [role="group"] { display: flex; width: 100%; }
+  .row [role="group"] button { flex: 1; padding: 0 6px; }
+  .streak { text-align: left; }
+  .streak:not(:has(.streakNum)) { display: none; }
+  .hero { gap: var(--s-3); }
+  .week { grid-template-columns: 52px repeat(7, minmax(0, 1fr)); }
+}
+
+@media (min-width: 1101px) and (min-height: 600px) {
+  .grid2 { flex: 1; min-height: 0; align-items: stretch; }
+  .col { min-height: 0; grid-template-rows: auto minmax(0, 1fr); }
+  .colFillFirst { grid-template-rows: minmax(0, 1fr) auto; }
+  .col3 { grid-template-rows: auto minmax(0, 1fr) auto; }
+  .list { min-height: 100%; display: flex; flex-direction: column; justify-content: space-around; }
+  .row { flex: 1; max-height: 96px; }
+}
+
+/* ----- Calendrier (jours de jeûne, fêtes) ----- */
+.days { list-style: none; margin: 0; padding: 0; display: grid; }
+.dayItem { display: grid; grid-template-columns: 92px minmax(0, 1fr) auto; align-items: center; gap: var(--s-3); padding: 10px 0; border-top: 1px solid var(--line); }
+.dayItem:first-child { border-top: 0; padding-top: 0; }
+.dayWhen { font: 500 11px/1.3 var(--font-mono); color: var(--fg-subtle); text-transform: uppercase; letter-spacing: 0.04em; }
+.dayItem[data-today] .dayWhen { color: var(--fg); }
+.dayBody { display: grid; gap: 2px; min-width: 0; }
+.dayLabel { font-size: var(--text-sm); font-weight: 600; }
+.dayMeta { font-size: 11.5px; color: var(--fg-subtle); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.calNote { margin-top: var(--s-3); font-size: 11px; color: var(--fg-subtle); }
+@media (max-width: 640px) {
+  .dayItem { grid-template-columns: 1fr auto; }
+  .dayWhen { grid-column: 1 / -1; }
+}
+
+.locate { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--hero-line); color: var(--hero-fg); margin-left: 4px; transition: background-color var(--d-fast) var(--e-out); }
+@media (hover: hover) and (pointer: fine) { .locate:hover { background: rgba(255, 255, 255, 0.1); } }
+
+@media (max-width: 640px) {
+  .hero { padding: var(--s-4) var(--s-5); }
+  .nextName { font-size: 2.1rem; }
+}
+
+/* Téléphone : prochaine prière sur peu de hauteur */
+@media (max-width: 640px) {
+  .hero { gap: 8px; padding: 14px 16px; }
+  .hero > div:first-of-type > :first-child { display: none; }
+  .nextName { font-size: 1.9rem; margin-top: 0; }
+  .nextMeta { margin-top: 2px; }
+  .heroRow { gap: 6px; }
+  .place { font-size: 11.5px; }
+  .row { padding: 8px 0; }
+}
+
+/* Téléphone, onglet Sunna : les prières surérogatoires en grandes cases qui remplissent le bloc */
+@media (max-width: 960px) {
+  :global([data-on]) > section > .chips {
+    flex: 1 1 auto;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: minmax(48px, 1fr);
+    gap: 8px;
+  }
+  :global([data-on]) > section > .chips > * { height: auto; min-height: 48px; border-radius: var(--r-md); justify-content: center; font-size: var(--text-sm); }
+  :global([data-on]) > section > .chips > :last-child:nth-child(odd) { grid-column: 1 / -1; }
+}

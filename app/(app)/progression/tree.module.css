@@ -1,0 +1,115 @@
+.card { position: relative; min-height: 560px; background: radial-gradient(70% 70% at 50% 50%, var(--card) 0%, var(--bg) 100%); }
+.svg { flex: 1; min-height: 0; width: 100%; height: 100%; color: var(--fg); user-select: none; }
+
+/* Branches qui poussent depuis le centre */
+.limb { fill: none; stroke: var(--fg); stroke-width: 2; stroke-linecap: round; opacity: 0.85; stroke-dasharray: 1; stroke-dashoffset: 1; animation: grow 900ms cubic-bezier(0.23, 1, 0.32, 1) forwards; animation-delay: inherit; }
+.branch { animation-delay: 0ms; }
+.fog { fill: none; stroke: var(--fg-subtle); stroke-width: 1.5; stroke-dasharray: 2 7; stroke-linecap: round; opacity: 0; animation: fade 600ms var(--e-out) 900ms forwards; }
+
+.head, .node, .root { opacity: 0; animation: pop 420ms var(--e-out) forwards; }
+.root { animation-delay: 0ms; }
+.headDisc { fill: var(--surface); stroke: var(--line-strong); stroke-width: 1; }
+.headIcon { color: var(--fg); }
+.headLabel { font: 600 11px var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; fill: var(--fg-muted); paint-order: stroke; stroke: var(--bg); stroke-width: 5px; stroke-linejoin: round; }
+.headCount { fill: var(--fg-subtle); font-weight: 500; }
+
+.node { cursor: pointer; }
+.hit { fill: transparent; }
+.doneDisc { fill: var(--fg); }
+.doneCheck { fill: none; stroke: var(--bg); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.ringTrack { fill: var(--bg); stroke: var(--line-strong); stroke-width: 2; }
+.ringArc { fill: none; stroke: var(--fg); stroke-width: 2.4; stroke-linecap: round; }
+.currentDisc { fill: var(--fg); animation: breathe 2.4s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+.label { font: 600 13px var(--font-sans); fill: var(--fg); paint-order: stroke; stroke: var(--bg); stroke-width: 5px; stroke-linejoin: round; }
+.labelDone { font: 500 11.5px var(--font-sans); fill: var(--fg-muted); paint-order: stroke; stroke: var(--bg); stroke-width: 5px; stroke-linejoin: round; }
+.doneDisc { stroke: var(--bg); stroke-width: 3; paint-order: stroke; }
+.doneDisc, .currentDisc { transition: transform var(--d-fast) var(--e-out); transform-box: fill-box; transform-origin: center; }
+.node[data-active] .doneDisc, .node[data-active] .currentDisc { transform: scale(1.35); }
+
+/* Étiquette au survol */
+.tip { animation: tip 160ms var(--e-out); }
+.tipBox { fill: var(--surface); stroke: var(--line-strong); stroke-width: 1; filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.45)); }
+.tipBranch { font: 600 9px var(--font-mono); letter-spacing: 0.12em; fill: var(--fg-subtle); }
+.tipLabel { font: 600 12.5px var(--font-sans); fill: var(--fg); }
+@keyframes tip { from { opacity: 0; transform: translateY(3px); } }
+
+.rootDisc { fill: var(--fg); filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.6)); }
+.rootIcon { color: var(--bg); pointer-events: none; }
+.rootCount { font: 700 13px var(--font-mono); fill: var(--bg); }
+.rootLabel { font: 700 11.5px var(--font-sans); fill: var(--bg); letter-spacing: -0.01em; }
+
+@keyframes grow { to { stroke-dashoffset: 0; } }
+@keyframes fade { to { opacity: 1; } }
+@keyframes pop { from { opacity: 0; } to { opacity: 1; } }
+@keyframes breathe { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }
+
+.hint { position: absolute; left: var(--s-5); top: var(--s-4); font-size: var(--text-xs); color: var(--fg-subtle); max-width: 34ch; pointer-events: none; }
+
+.panel {
+  position: absolute;
+  right: var(--s-4);
+  bottom: var(--s-4);
+  z-index: 5;
+  width: min(300px, calc(100% - 32px));
+  padding: var(--s-4);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-pop);
+  display: grid;
+  gap: 6px;
+  animation: panel var(--d-base) var(--e-out);
+  transform-origin: bottom right;
+}
+.panelHead { display: flex; justify-content: space-between; align-items: center; }
+.panelBranch { font: 500 11px/1 var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-subtle); }
+.close { display: grid; place-items: center; width: 28px; height: 28px; border-radius: var(--r-pill); color: var(--fg-subtle); }
+@media (hover: hover) and (pointer: fine) { .close:hover { background: var(--card-2); color: var(--fg); } }
+.panelTitle { font-size: var(--text-lg); font-weight: 600; letter-spacing: -0.02em; }
+.panelState { font-size: var(--text-sm); color: var(--fg-muted); }
+.panelXp { font: 600 12px/1.4 var(--font-mono); color: var(--fg); }
+@keyframes panel { from { opacity: 0; transform: scale(0.97) translateY(4px); } }
+
+@media (min-width: 1101px) and (min-height: 600px) {
+  .card { flex: 1; min-height: 0; }
+}
+@media (min-width: 961px) and (max-width: 1100px) {
+  .card { height: 72vh; }
+}
+@media (max-width: 960px) {
+  .card { min-height: 320px; }
+}
+@media (max-width: 640px) {
+  .hint { display: none; }
+  .panel { left: var(--s-3); right: var(--s-3); width: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .limb { stroke-dashoffset: 0; animation: none; }
+  .fog, .head, .node, .root { opacity: 1; animation: none; }
+  .tip { animation: none; }
+  .currentDisc { animation: none; }
+}
+
+.branchName { font: 600 10px var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; fill: var(--fg-subtle); paint-order: stroke; stroke: var(--bg); stroke-width: 5px; stroke-linejoin: round; }
+
+/* Zoom */
+.svg { touch-action: none; cursor: default; }
+.svg[data-zoomed] { cursor: grab; }
+.svg[data-zoomed]:active { cursor: grabbing; }
+.world { transition: transform 0s; }
+.zoomLabel, .zoomLabelDone { font-family: var(--font-sans); font-weight: 600; fill: var(--fg); paint-order: stroke; stroke: var(--bg); stroke-linejoin: round; pointer-events: none; animation: fade 200ms var(--e-out) both; }
+.zoomLabelDone { font-weight: 500; fill: var(--fg-muted); }
+.zoom {
+  position: absolute;
+  left: var(--s-4);
+  bottom: var(--s-4);
+  display: grid;
+  gap: 4px;
+  padding: 4px;
+  border-radius: var(--r-pill);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  z-index: 4;
+}
+.zoom button { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; color: var(--fg-muted); transition: background-color 150ms ease, color 150ms ease; }
+.zoom button:disabled { opacity: 0.35; }
+@media (hover: hover) and (pointer: fine) { .zoom button:not(:disabled):hover { background: var(--card-3); color: var(--fg); } }

@@ -1,0 +1,124 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gutter);
+}
+.ruh { grid-column: span 2; display: flex; flex-direction: column; gap: var(--s-4); padding: var(--s-6) var(--s-7); }
+.orb { width: 240px; right: -70px; top: -100px; opacity: 0.85; }
+.ruhHead { display: flex; align-items: center; justify-content: space-between; gap: var(--s-3); flex-wrap: wrap; }
+.sync { font-size: var(--text-xs); color: var(--hero-muted); }
+.notLinked {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--hero-line);
+  font-size: var(--text-xs);
+  color: var(--hero-fg);
+}
+.level { color: var(--hero-muted); font-size: var(--text-sm); }
+.level strong { color: var(--hero-fg); font-size: var(--text-xl); letter-spacing: -0.03em; margin-left: 6px; font-weight: 600; }
+
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s-3); }
+.tile {
+  display: grid;
+  gap: 4px;
+  padding: var(--s-3) var(--s-4);
+  border-radius: var(--r-md);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--hero-line);
+  min-width: 0;
+}
+.tileLabel { font: 500 10.5px/1.2 var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--hero-subtle); }
+.tileValue { font-size: var(--text-xl); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.tileSub { font-size: 11px; color: var(--hero-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.levels { display: grid; gap: 8px; }
+.levelRow { display: grid; grid-template-columns: 110px minmax(0, 1fr) 44px; align-items: center; gap: var(--s-3); font-size: var(--text-xs); color: var(--hero-muted); }
+.levelBar { height: 4px; border-radius: var(--r-pill); background: rgba(255, 255, 255, 0.1); overflow: hidden; }
+.levelBar i { display: block; height: 100%; background: #fff; border-radius: inherit; }
+.levelNum { text-align: right; color: var(--hero-fg); font-variant-numeric: tabular-nums; font-weight: 600; }
+
+.empty { display: grid; gap: var(--s-4); justify-items: start; max-width: 46ch; color: var(--hero-muted); font-size: var(--text-sm); margin: auto 0; }
+.cta {
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 var(--s-4);
+  border-radius: var(--r-pill);
+  background: #fff;
+  color: #0a0a0a;
+  font-weight: 600;
+  font-size: var(--text-sm);
+  transition: opacity var(--d-fast) var(--e-out), transform var(--d-fast) var(--e-out);
+}
+.cta:active { transform: scale(0.97); }
+.links { margin-top: auto; display: flex; flex-wrap: wrap; gap: 6px; }
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 30px;
+  padding: 0 12px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--hero-line);
+  font-size: var(--text-xs);
+  color: var(--hero-muted);
+  transition: color var(--d-fast) var(--e-out), border-color var(--d-fast) var(--e-out);
+}
+@media (hover: hover) and (pointer: fine) { .link:hover { color: var(--hero-fg); border-color: rgba(255, 255, 255, 0.3); } }
+
+/* Prières */
+.prayerTop { display: flex; align-items: center; gap: var(--s-5); flex: none; }
+.prayerNums { display: grid; gap: 6px; font-size: var(--text-sm); color: var(--fg-muted); }
+.prayerNums strong { color: var(--fg); font-variant-numeric: tabular-nums; margin-right: 4px; }
+.heat { margin-top: auto; padding-top: var(--s-4); display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 5px; }
+.heat i { aspect-ratio: 1; border-radius: 4px; background: var(--card-3); }
+.heat i[data-n="1"] { background: color-mix(in srgb, var(--fg) 22%, var(--card-3)); }
+.heat i[data-n="2"] { background: color-mix(in srgb, var(--fg) 40%, var(--card-3)); }
+.heat i[data-n="3"] { background: color-mix(in srgb, var(--fg) 58%, var(--card-3)); }
+.heat i[data-n="4"] { background: color-mix(in srgb, var(--fg) 78%, var(--card-3)); }
+.heat i[data-n="5"] { background: var(--fg); }
+
+/* Leçons */
+.lessons { list-style: none; margin: 0; padding: 0; display: grid; }
+.lesson { display: grid; gap: 6px; padding: 10px 0; border-top: 1px solid var(--line); }
+.lessons li:first-child .lesson { border-top: 0; padding-top: 0; }
+.lessonTitle { font-size: var(--text-sm); font-weight: 500; }
+@media (hover: hover) and (pointer: fine) { .lesson:hover .lessonTitle { text-decoration: underline; text-underline-offset: 3px; } }
+.lessonMeta { display: flex; align-items: center; gap: var(--s-2); }
+.lessonDate { font-size: 11px; color: var(--fg-subtle); }
+.muted { color: var(--fg-muted); font-size: var(--text-sm); }
+
+/* Chiffres */
+.stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-4) var(--s-3); margin-bottom: var(--s-4); }
+.stat { display: grid; gap: 2px; min-width: 0; }
+.statValue { font-size: var(--text-xl); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.statLabel { font-size: var(--text-xs); color: var(--fg-muted); }
+.statSub { font-size: 11px; color: var(--fg-subtle); }
+.adhkarBars { display: grid; gap: var(--s-3); margin-top: auto; }
+
+@media (min-width: 1101px) and (min-height: 600px) {
+  .grid { flex: 1; min-height: 0; grid-template-rows: minmax(0, 1.15fr) minmax(0, 1fr); }
+  .ruh { min-height: 0; overflow: hidden; }
+}
+@media (max-width: 1100px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .grid { grid-template-columns: minmax(0, 1fr); }
+  .ruh { grid-column: auto; padding: var(--s-5); }
+  .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .levelRow { grid-template-columns: 96px minmax(0, 1fr) 40px; }
+}
+
+@media (max-width: 640px) {
+  .ruh { gap: var(--s-3); padding: var(--s-4) 18px; }
+  .tiles { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+  .tile { padding: 8px; gap: 2px; }
+  .tileLabel { font-size: 8.5px; letter-spacing: 0.04em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tileValue { font-size: var(--text-lg); }
+  .tileSub { display: none; }
+  .levels { gap: 4px; }
+}
